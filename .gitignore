@@ -1,0 +1,9 @@
+*.map
+*.elf
+*.o
+*.btbf
+*.bin
+*.out
+**/build
+**/.cache
+**/sdkconfig*
