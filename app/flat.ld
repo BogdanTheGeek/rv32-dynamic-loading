@@ -3,7 +3,7 @@ ENTRY(main)
 /* Specify the memory areas */
 MEMORY
 {
-  all (RWX) : ORIGIN = 0x00000000, LENGTH = 0xFFFFFFFF
+  all (RWX) : ORIGIN = 0x00000000, LENGTH = 64k
 }
 
 /* Define output sections */
@@ -15,10 +15,10 @@ SECTIONS
     . = ALIGN(4);
     *(.text.startup.main)
     *(.text.main)
-    /**(.text)                 /* .text sections (code) */*/
-    *(.text*)                /* .text* sections (code) */
-    *(.rodata)               /* .rodata sections (constants, strings, etc.) */
-    *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
+    /**(.text)      /* .text sections (code) */*/
+    *(.text*)       /* .text* sections (code) */
+    *(.rodata)      /* .rodata sections (constants, strings, etc.) */
+    *(.rodata*)     /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);
   } > all
 
@@ -26,17 +26,11 @@ SECTIONS
   {
     . = ALIGN(4);
     *(.sys_struct)
-    *(.data)                 /* .data sections */
-    *(.data*)                /* .data* sections */
+    *(.data)         /* .data sections */
+    *(.data*)        /* .data* sections */
     /*PROVIDE( __global_pointer$ = . + 0x800 );*/
-
     . = ALIGN(4);
   } > all
-
-  .got :
-  {
-    *(.got*)
-  }
 
   .bss :
   {
@@ -44,6 +38,11 @@ SECTIONS
     *(.bss)
     *(.bss*)
     . = ALIGN(4);
+  } > all
+
+  .got :
+  {
+    *(.got*) /* this is weird, it joins .got and .got.plt */
   } > all
 
 

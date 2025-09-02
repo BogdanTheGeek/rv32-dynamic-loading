@@ -58,8 +58,8 @@ BTBF_Status_t BTBF_InitApp(const BTBF_Header_t *header, uint8_t *app,
 
 
    // patch the GOT
-   uint32_t *got = (uint32_t *)(app) + header->text_size + header->data_size;
-   for (size_t i = 1; i < header->got_size - 2; i++) {
+   uint32_t *got = (uint32_t *)(app) + header->text_size + header->data_size + header->bss_size;
+   for (size_t i = 1; i < header->got_size; i++) {
       got[i] += (uint32_t)app;
    }
 
